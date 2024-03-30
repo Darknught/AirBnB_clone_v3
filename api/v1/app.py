@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""Module that defines the app"""
 from flask import Flask
 import os
 from models import storage
