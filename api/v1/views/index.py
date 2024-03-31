@@ -21,9 +21,16 @@ def status():
 @app_views.route('/stats', methods=['GET'])
 def stats():
     """Retrieve the number of each object by type."""
-    classes = [User, City, Place, Review, State, Amenity]
+    class_mapping = {
+        User: "users",
+        City: "cities",
+        Place: "places",
+        Review: "reviews",
+        State: "states",
+        Amenity: "amenities"
+    }
     stats = {}
-    for cls in classes:
+    for cls, name in class_mapping.items():
         count = storage.count(cls)
-        stats[cls.__name__] = count
+        stats[name] = count
     return json.dumps(stats, indent=4) + '\n'
