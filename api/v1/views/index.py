@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Index file"""
+import json
 from flask import jsonify
 from api.v1.views import app_views
 from models import storage
@@ -25,4 +26,4 @@ def stats():
     for cls in classes:
         count = storage.count(cls)
         stats[cls.__name__] = count
-    return jsonify(stats)
+    return json.dumps(stats, indent=4) + '\n'
