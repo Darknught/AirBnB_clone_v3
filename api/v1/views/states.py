@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ A module that creates a new view for State objects."""
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from api.v1.views import app_views
 from models import storage
 from models.state import State
@@ -18,7 +18,7 @@ def get_state(state_id):
     """Retrieve a State object by ID."""
     state = storage.get(State, state_id)
     if state is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     return jsonify(state.to_dict())
 
 
@@ -28,7 +28,7 @@ def delete_state(state_id):
     """Delete a State object by Id."""
     state = storage.get(State, state_id)
     if state is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     storage.delete(state)
     storage.save()
     return jsonify({}), 200
@@ -54,7 +54,7 @@ def update_state(state_id):
     """Update a State object by ID."""
     state = storage.get(State, state_id)
     if state is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
 
     if not request.is_json:
         return jsonify({"error": "Not a JSON"}), 400
