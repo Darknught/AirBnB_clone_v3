@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """Module that defines the app"""
-from flask import Flask, jsonify
+import json
+from flask import Flask, jsonify, make_response
 import os
 from models import storage
 from api.v1.views import app_views
 
 
 app = Flask(__name__)
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
 
 
@@ -20,7 +20,12 @@ def close_storage(exception=None):
 @app.errorhandler(404)
 def not_found(error):
     """Return a custom message for 404 errors."""
-    return jsonify({"error": "Not found"}), 404
+    response = make_response(
+                             json.dumps(
+                                        {"error": "Not found"},
+                                        indent=4) + '\n', 404)
+    response.mimetype = "application/json"
+    return response
 
 
 if __name__ == "__main__":
