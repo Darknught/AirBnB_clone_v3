@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Hassan Mohammed <hassino66@yahoo.com>
+Hassan Mohammed <hassino66@yahoo.com> \
 Pibo Shongwe <piboman@yahoo.com>
 
 ## License
