@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Index file"""
+import json
 from flask import jsonify
 from api.v1.views import app_views
 from models import storage
@@ -13,15 +14,23 @@ from models.amenity import Amenity
 
 @app_views.route('/status', methods=['GET'])
 def status():
+    """status"""
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
     """Retrieve the number of each object by type."""
-    classes = [User, City, Place, Review, State, Amenity]
+    class_mapping = {
+        User: "users",
+        City: "cities",
+        Place: "places",
+        Review: "reviews",
+        State: "states",
+        Amenity: "amenities"
+    }
     stats = {}
-    for cls in classes:
+    for cls, name in class_mapping.items():
         count = storage.count(cls)
-        stats[cls.__name__] = count
-    return jsonify(stats)
+        stats[name] = count
+    return json.dumps(stats, indent=4) + '\n'
