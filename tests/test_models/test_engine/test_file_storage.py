@@ -121,8 +121,9 @@ class TestFileStorage(unittest.TestCase):
         storage.reload()
         state_obj = {"name": "Kaapstad"}
         state_ins = State(**state_obj)
+        storage.new(state_ins)
+        storage.save()
         queried_state = storage.get(State, state_ins.id)
-        print(state_ins)
         self.assertEqual(state_ins, queried_state)
         fake_id = storage.get(State, 'fake_id')
         self.assertEqual(fake_id, None)
